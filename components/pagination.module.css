@@ -1,0 +1,89 @@
+:root {
+  --bg: #181022;
+  --text: #fdf4ff;
+  --accent: #f0abfc;
+  --accent-text: #2e1065;
+  --focus: #22d3ee;
+  --hover: #e879f9;
+  --disabled: #d6d3d1;
+  --zebra: #2a1838;
+  --error: #ff0000;
+  --error-bg: #fff2f2;
+  --error-text: #8a1f1f;
+  --error-border: #f3b4b4;
+}
+
+:global(*),
+:global(*::after),
+:global(*::before) {
+  box-sizing: border-box;
+}
+
+:global(body) {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.controllBtnContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.controllBtn {
+  width: auto;
+  font-size: 1.125rem;
+  background-color: var(--accent);
+  color: var(--accent-text);
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.75rem 2rem;
+  cursor: pointer;
+}
+
+.controllBtn:hover:not(:disabled) {
+  background-color: var(--hover);
+}
+
+.controllBtn:disabled {
+  background-color: var(--disabled);
+  color: var(--accent-text);
+  cursor: not-allowed;
+}
+
+.pageBtnContainer {
+  display: none;
+  justify-content: center;
+  align-items: flex-end;
+  color: var(--accent);
+}
+
+.pageBtn {
+  height: fit-content;
+  width: fit-content;
+  background-color: var(--bg);
+  color: var(--accent);
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+}
+
+.active {
+  background-color: var(--accent);
+  color: var(--accent-text);
+}
+
+.pageBtn:hover {
+  background-color: var(--hover);
+  color: var(--accent-text);
+}
+
+@media (min-width: 48rem) {
+  .pageBtnContainer {
+    display: flex;
+  }
+}

@@ -1,9 +1,29 @@
-import React from 'react'
+import React from "react";
+import Person from "@/types/types";
+import styles from "./pagination.module.css";
 
-const Pagination = () => {
+type PaginationProps = {
+  page: number;
+  pageSize: number;
+  filteredList: Person[];
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+};
+
+const Pagination = ({
+  page,
+  pageSize,
+  filteredList,
+  setPage,
+}: PaginationProps) => {
+  const handlePrev = () => setPage(page - 1);
+  const handleNext = () => setPage(page + 1);
+  const totalPages = Math.ceil(filteredList.length / pageSize);
+  const pageArr = Array.from({ length: totalPages }, (value, idx) => idx + 1);
+  const windowStart = Math.max(page - 1, 1);
+  const windowEnd = windowStart + 2;
+
   return (
-    <div>
-      
+    <>
       {filteredList && (
         <div className={styles.buttonContainer}>
           <div className={styles.controllBtnContainer}>
@@ -70,8 +90,8 @@ const Pagination = () => {
           </div>
         </div>
       )}
-    </div>
-  )
-}
+    </>
+  );
+};
 
-export default Pagination
+export default Pagination;
