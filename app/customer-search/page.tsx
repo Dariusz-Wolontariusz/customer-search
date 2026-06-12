@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import { useEffect, useState } from "react";
 import styles from "./styles.module.css";
+import { useEffect, useState } from "react";
+import { CircleAlert } from "lucide-react";
 
 type Person = {
   id: number;
@@ -11,18 +12,13 @@ type Person = {
 };
 
 async function getUsers(): Promise<Person[]> {
-  try {
-    const response = await fetch("/mockData.json");
+  const response = await fetch("/mockData.json");
 
-    if (response.ok) {
-      const data = response.json();
-      return data;
-    }
-    throw new Error("Something went wrong with fetching the data.");
-  } catch (error) {
-    console.log("error:", error);
+  if (response.ok) {
+    const data = response.json();
+    return data;
   }
-  return [];
+  throw new Error("Something went wrong with fetching the data.");
 }
 
 const UserSearch = () => {
@@ -30,13 +26,26 @@ const UserSearch = () => {
   const [usersList, setUsersList] = useState<Person[]>([]);
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(50);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const load = async () => {
-      const data = await getUsers();
-      setUsersList(data);
+      try {
+        setError(null);
 
-      return usersList;
+        const data = await getUsers();
+        setUsersList(data);
+
+        return usersList;
+      } catch (error) {
+        setError(
+          "Could not load the customers list. Please refresh the screen to try again.",
+        );
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     load();
@@ -73,6 +82,14 @@ const UserSearch = () => {
           value={searchWord}
         />
       </div>
+
+      {isLoading && <p>Loading data...</p>}
+      {error && (
+        <p className={styles.errorAlert} role="alert">
+          <CircleAlert className={styles.errorIcon} size={20} />
+          <span>{error}</span>
+        </p>
+      )}
 
       {/* matches */}
 
@@ -179,12 +196,19 @@ const UserSearch = () => {
             </tr>
           </thead>
           <tbody>
-            {visible &&
-              visible.map((user) => (
-                <tr key={user.id}>
-                  <td>{user.id}</td>
-                  <td>{user.name}</td>
-                  <td>{user.email}</td>
+            {!isLoading &&
+              !error &&
+              (visible.length > 0 ? (
+                visible.map((user) => (
+                  <tr key={user.id}>
+                    <td>{user.id}</td>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={3}>No users matching your search.</td>
                 </tr>
               ))}
           </tbody>

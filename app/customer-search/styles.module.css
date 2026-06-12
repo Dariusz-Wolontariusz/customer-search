@@ -18,6 +18,10 @@
   --hover: #e879f9;
   --disabled: #d6d3d1;
   --zebra: #2a1838;
+  --error: #ff0000;
+  --error-bg: #fff2f2;
+  --error-text: #8a1f1f;
+  --error-border: #f3b4b4;
 }
 
 :global(*),
@@ -164,6 +168,28 @@
 
 .tableWrapper tbody tr:nth-child(even) {
   background-color: var(--zebra);
+}
+
+.errorAlert {
+  width: 100%;
+  max-width: 42rem;
+  margin: 1rem 0;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--error-border);
+  border-left: 5px solid var(--error);
+  border-radius: 0.75rem;
+  background-color: var(--error-bg);
+  color: var(--error-text);
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.errorIcon {
+  color: var(--error);
+  flex-shrink: 0;
 }
 
 @media (min-width: 48rem) {
