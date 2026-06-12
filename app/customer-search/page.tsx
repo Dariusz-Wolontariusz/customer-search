@@ -6,6 +6,7 @@ import Person from "@/types/types";
 import { useEffect, useState } from "react";
 import { CircleAlert } from "lucide-react";
 import Pagination from "@/components/Pagination";
+import Table from "@/components/Table";
 
 async function getUsers(): Promise<Person[]> {
   const response = await fetch("/mockData.json");
@@ -24,6 +25,7 @@ const UserSearch = () => {
   const [pageSize, setPageSize] = useState<number>(50);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const columnNumber = 3;
 
   useEffect(() => {
     const load = async () => {
@@ -51,9 +53,6 @@ const UserSearch = () => {
     user.name.toLowerCase().includes(searchWord.toLowerCase()),
   );
 
-  const startIndex = (page - 1) * pageSize;
-  const visible = filteredList.slice(startIndex, startIndex + pageSize);
-  
   return (
     <div className={styles.mainContainer}>
       <h1>Customer Search</h1>
@@ -112,35 +111,14 @@ const UserSearch = () => {
         filteredList={filteredList}
       />
 
-      {/* table  */}
-      <div className={styles.tableWrapper}>
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Name</th>
-              <th scope="col">Email address</th>
-            </tr>
-          </thead>
-          <tbody>
-            {!isLoading &&
-              !error &&
-              (visible.length > 0 ? (
-                visible.map((user) => (
-                  <tr key={user.id}>
-                    <td>{user.id}</td>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={3}>No users matching your search.</td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
+      {!isLoading && !error && (
+        <Table
+          page={page}
+          pageSize={pageSize}
+          filteredList={filteredList}
+          columnNumber={columnNumber}
+        />
+      )}
 
       <Pagination
         page={page}
