@@ -6,17 +6,17 @@ type PaginationProps = {
   page: number;
   pageSize: number;
   filteredList: Person[];
-  setPage: React.Dispatch<React.SetStateAction<number>>;
+  goToPage: (n: number) => void;
 };
 
 const Pagination = ({
   page,
   pageSize,
   filteredList,
-  setPage,
+  goToPage,
 }: PaginationProps) => {
-  const handlePrev = () => setPage(page - 1);
-  const handleNext = () => setPage(page + 1);
+  const handlePrev = () => goToPage(page - 1);
+  const handleNext = () => goToPage(page + 1);
   const totalPages = Math.ceil(filteredList.length / pageSize);
   const pageArr = Array.from({ length: totalPages }, (value, idx) => idx + 1);
   const windowStart = Math.max(page - 1, 1);
@@ -34,12 +34,11 @@ const Pagination = ({
             >
               Prev
             </button>
-            {/* page buttons */}
 
             <div className={styles.pageBtnContainer}>
               <button
                 className={`${styles.pageBtn} ${page === 1 ? styles.active : ""}`}
-                onClick={() => setPage(1)}
+                onClick={() => goToPage(1)}
               >
                 1
               </button>
@@ -61,7 +60,7 @@ const Pagination = ({
                         className={`${styles.pageBtn} ${
                           page === pageNumber ? styles.active : ""
                         }`}
-                        onClick={() => setPage(pageNumber)}
+                        onClick={() => goToPage(pageNumber)}
                       >
                         {pageNumber}
                       </button>
@@ -74,7 +73,7 @@ const Pagination = ({
                 className={`${styles.pageBtn} ${
                   page === pageArr.at(-1) ? styles.active : ""
                 }`}
-                onClick={() => setPage(pageArr.at(-1) ?? 1)}
+                onClick={() => goToPage(pageArr.at(-1) ?? 1)}
               >
                 {pageArr.at(-1)}
               </button>

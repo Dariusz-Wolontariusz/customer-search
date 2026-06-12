@@ -4,6 +4,7 @@ import React from "react";
 import styles from "./styles.module.css";
 import Person from "@/types/types";
 import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { CircleAlert } from "lucide-react";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
@@ -19,13 +20,34 @@ async function getUsers(): Promise<Person[]> {
 }
 
 const UserSearch = () => {
-  const [searchWord, setSearchWord] = useState<string>("");
+  // const [searchWord, setSearchWord] = useState<string>("");
   const [usersList, setUsersList] = useState<Person[]>([]);
-  const [page, setPage] = useState<number>(1);
+  // const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(50);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const columnNumber = 3;
+
+  // Url query part
+
+  const searchParams = useSearchParams();
+  const search = searchParams.get("search") ?? "";
+  console.log("search:", search);
+  const router = useRouter();
+
+  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("search", e.target.value);
+    params.set("page", "1");
+    router.replace(`?${params.toString()}`);
+  };
+
+  const page = Number(searchParams.get("page")) || 1;
+  const goToPage = (n: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", String(n));
+    router.replace(`?${params.toString()}`);
+  };
 
   useEffect(() => {
     const load = async () => {
@@ -50,7 +72,7 @@ const UserSearch = () => {
   }, []);
 
   const filteredList = usersList.filter((user) =>
-    user.name.toLowerCase().includes(searchWord.toLowerCase()),
+    user.name.toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
@@ -63,11 +85,8 @@ const UserSearch = () => {
           className={styles.inputField}
           type="text"
           placeholder="Search user"
-          onChange={(e) => {
-            setSearchWord(e.target.value);
-            setPage(1);
-          }}
-          value={searchWord}
+          onChange={handleSearchInput}
+          value={search}
         />
       </div>
 
@@ -91,7 +110,7 @@ const UserSearch = () => {
               id="selectAmoutItems"
               onChange={(e) => {
                 setPageSize(+e.target.value);
-                setPage(1);
+                goToPage(1);
               }}
               defaultValue={50}
             >
@@ -107,7 +126,7 @@ const UserSearch = () => {
       <Pagination
         page={page}
         pageSize={pageSize}
-        setPage={setPage}
+        goToPage={goToPage}
         filteredList={filteredList}
       />
 
@@ -123,7 +142,7 @@ const UserSearch = () => {
       <Pagination
         page={page}
         pageSize={pageSize}
-        setPage={setPage}
+        goToPage={goToPage}
         filteredList={filteredList}
       />
     </div>
