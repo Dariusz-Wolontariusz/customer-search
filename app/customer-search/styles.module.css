@@ -1,0 +1,203 @@
+/* :root {
+  --bg: #fafafa;
+  --text: #1e293b;
+  --accent: #0d9488;
+  --accent-text: #ffffff;
+  --focus: #0e615a;
+  --hover: #095851;
+  --disabled: #1e293b;
+  --zebra: #00f4e03d;
+} */
+
+:root {
+  --bg: #181022;
+  --text: #fdf4ff;
+  --accent: #f0abfc;
+  --accent-text: #2e1065;
+  --focus: #22d3ee;
+  --hover: #e879f9;
+  --disabled: #d6d3d1;
+  --zebra: #2a1838;
+}
+
+:global(*),
+:global(*::after),
+:global(*::before) {
+  box-sizing: border-box;
+}
+
+:global(body) {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.mainContainer {
+  width: 100%;
+  max-width: 100vw;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mainContainer h1 {
+  color: var(--text);
+  text-align: center;
+}
+
+.inputField {
+  width: 100%;
+  padding: 0.75rem;
+  border: 3px solid var(--accent);
+  border-radius: 0.75rem;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.inputField:focus {
+  outline: 4px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.matchesContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.selectAmountItemsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.selectAmountItems {
+  width: 5rem;
+  border: 3px solid var(--accent);
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.controllBtnContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.controllBtn {
+  width: auto;
+  font-size: 1.125rem;
+  background-color: var(--accent);
+  color: var(--accent-text);
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.75rem 2rem;
+  cursor: pointer;
+}
+
+.controllBtn:hover:not(:disabled) {
+  background-color: var(--hover);
+}
+
+.controllBtn:disabled {
+  background-color: var(--disabled);
+  color: var(--accent-text);
+  cursor: not-allowed;
+}
+
+.pageBtnContainer {
+  display: none;
+  justify-content: center;
+  align-items: flex-end;
+  color: var(--accent);
+}
+
+.pageBtn {
+  height: fit-content;
+  width: fit-content;
+  background-color: var(--bg);
+  color: var(--accent);
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+}
+
+.active {
+  background-color: var(--accent);
+  color: var(--accent-text);
+}
+
+.pageBtn:hover {
+  background-color: var(--hover);
+  color: var(--accent-text);
+}
+
+.tableWrapper {
+  overflow: auto;
+  max-width: 100%;
+  max-height: 75vh;
+}
+
+.tableWrapper td,
+.tableWrapper th {
+  white-space: nowrap;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.tableWrapper th {
+  background-color: var(--accent);
+  color: var(--accent-text);
+  position: sticky;
+  top: 0;
+}
+
+.tableWrapper tbody tr:nth-child(even) {
+  background-color: var(--zebra);
+}
+
+@media (min-width: 48rem) {
+  .mainContainer {
+    max-width: 64rem;
+    margin: 0 auto;
+  }
+
+  .searchGroup {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .matchesContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .selectAmountItemsContainer label {
+    margin: 0;
+  }
+
+  .selectAmountItemsContainer {
+    flex-direction: row;
+  }
+
+  .pageBtnContainer {
+    display: flex;
+  }
+
+  .tableWrapper table {
+    width: 100%;
+  }
+}
