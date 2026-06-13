@@ -1,9 +1,8 @@
 "use client";
 
-import React from "react";
 import styles from "./styles.module.css";
 import Person from "@/types/types";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { CircleAlert } from "lucide-react";
 import Pagination from "@/components/Pagination";
@@ -13,34 +12,26 @@ async function getUsers(): Promise<Person[]> {
   const response = await fetch("/mockData.json");
 
   if (response.ok) {
-    const data = response.json();
+    const data: Person[] = await response.json();
     return data;
   }
-  throw new Error("Something went wrong with fetching the data.");
+  throw new Error("Something went wrong while fetching the data.");
 }
 
 const UserSearch = () => {
-  // const [searchWord, setSearchWord] = useState<string>("");
   const [usersList, setUsersList] = useState<Person[]>([]);
-  // const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(50);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const columnNumber = 3;
+  const isFirstRun = useRef(true);
 
   // Url query part
 
   const searchParams = useSearchParams();
   const search = searchParams.get("search") ?? "";
-  console.log("search:", search);
+  const [searchWordInput, setSearchWordInput] = useState<string>(search);
   const router = useRouter();
-
-  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const params = new URLSearchParams(searchParams);
-    params.set("search", e.target.value);
-    params.set("page", "1");
-    router.replace(`?${params.toString()}`);
-  };
 
   const page = Number(searchParams.get("page")) || 1;
   const goToPage = (n: number) => {
@@ -71,6 +62,25 @@ const UserSearch = () => {
     load();
   }, []);
 
+  useEffect(() => {
+    const updateUrl = (searchWordInput: string) => {
+      const params = new URLSearchParams(searchParams);
+      params.set("search", searchWordInput);
+      params.set("page", "1");
+      router.replace(`?${params.toString()}`);
+    };
+
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
+    }
+    const debouncedSearch = setTimeout(() => {
+      updateUrl(searchWordInput);
+    }, 500);
+
+    return () => clearTimeout(debouncedSearch);
+  }, [searchWordInput]);
+
   const filteredList = usersList.filter((user) =>
     user.name.toLowerCase().includes(search.toLowerCase()),
   );
@@ -85,8 +95,8 @@ const UserSearch = () => {
           className={styles.inputField}
           type="text"
           placeholder="Search user"
-          onChange={handleSearchInput}
-          value={search}
+          onChange={(e) => setSearchWordInput(e.target.value)}
+          value={searchWordInput}
         />
       </div>
 
