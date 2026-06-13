@@ -11,7 +11,14 @@
   --error-bg: #fff2f2;
   --error-text: #8a1f1f;
   --error-border: #f3b4b4;
+  --pill-active-bg: #e1f5ee;
+  --pill-active-text: #0f6e56;
+  --pill-pending-bg: #faeeda;
+  --pill-pending-text: #854f0b;
+  --pill-inactive-bg: #f1efe8;
+  --pill-inactive-text: #5f5e5a;
 }
+
 
 *,
 *::after,
@@ -29,7 +36,7 @@ body {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: var(--bg);
     --foreground: #ededed;
   }
 }

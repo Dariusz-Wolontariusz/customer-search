@@ -1,3 +1,4 @@
+
 .tableWrapper {
   overflow: auto;
   max-width: 100%;
@@ -8,7 +9,7 @@
 .tableWrapper th {
   white-space: nowrap;
   padding: 0.5rem;
-  text-align: left;
+  /* text-align: left; */
 }
 
 .tableWrapper th {
@@ -20,6 +21,48 @@
 
 .tableWrapper tbody tr:nth-child(even) {
   background-color: var(--zebra);
+}
+
+.statusCell {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.status {
+  display: inline-block;
+  border-radius: 1rem;
+  padding: 0.25rem 0.6rem;
+}
+
+.active {
+  background-color: var(--pill-active-bg);
+  color: var(--pill-active-text);
+  border: 1px solid var(--pill-active-text);
+}
+
+.pending {
+  background-color: var(--pill-pending-bg);
+  color: var(--pill-pending-text);
+  border: 1px solid var(--pill-pending-text);
+}
+
+.inactive {
+  background-color: var(--pill-inactive-bg);
+  color: var(--pill-inactive-text);
+  border: 1px solid var(--pill-inactive-text);
+}
+
+.avatarCell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar {
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 @media (min-width: 48rem) {

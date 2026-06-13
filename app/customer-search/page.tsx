@@ -81,8 +81,11 @@ const UserSearch = () => {
     return () => clearTimeout(debouncedSearch);
   }, [searchWordInput]);
 
-  const filteredList = usersList.filter((user) =>
-    user.name.toLowerCase().includes(search.toLowerCase()),
+  const filteredList = usersList.filter(
+    (user) =>
+      user.firstName.toLowerCase().includes(search.toLowerCase()) ||
+      user.lastName.toLowerCase().includes(search.toLowerCase()) ||
+      user.email.toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
