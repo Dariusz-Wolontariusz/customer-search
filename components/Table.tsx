@@ -1,6 +1,7 @@
 import Person from "@/types/types";
-import React from "react";
 import styles from "./table.module.css";
+import { ArrowDownAZ, ArrowUpZA } from "lucide-react";
+import { useState } from "react";
 
 type TableProps = {
   page: number;
@@ -10,8 +11,34 @@ type TableProps = {
 };
 
 const Table = ({ page, pageSize, filteredList, columnNumber }: TableProps) => {
+  const [sortDir, setSortDir] = useState<"asc" | "dsc">("asc");
+  const [sortField, setSortField] = useState<keyof Person>("firstName");
   const startIndex = (page - 1) * pageSize;
-  const visible = filteredList.slice(startIndex, startIndex + pageSize);
+
+  const comparator = (a: Person, b: Person) => {
+    const aVal = a[sortField];
+    const bVal = b[sortField];
+
+    if (typeof aVal === "string" && typeof bVal === "string") {
+      const result = aVal.localeCompare(bVal);
+      return sortDir === "asc" ? result : -result;
+    } else if (typeof aVal === "number" && typeof bVal === "number") {
+      const result = aVal - bVal;
+      return sortDir === "asc" ? result : -result;
+    }
+    return 0;
+  };
+
+  const sorted = filteredList.toSorted(comparator);
+  const visible = sorted.slice(startIndex, startIndex + pageSize);
+
+  const handleToggleSort = (field: keyof Person) => {
+    setSortField(field);
+    if (field !== sortField) {
+      return setSortDir("asc");
+    }
+    return setSortDir((prev) => (prev === "asc" ? "dsc" : "asc"));
+  };
 
   return (
     <div className={styles.tableWrapper}>
@@ -19,8 +46,22 @@ const Table = ({ page, pageSize, filteredList, columnNumber }: TableProps) => {
         <thead>
           <tr>
             <th scope="col">Avatar</th>
-            <th scope="col">Name</th>
-            <th scope="col">Email address</th>
+            <th scope="col">
+              Name
+              <span>
+                <button onClick={() => handleToggleSort("firstName")}>
+                  {sortDir === "asc" ? <ArrowUpZA /> : <ArrowDownAZ />}
+                </button>
+              </span>
+            </th>
+            <th scope="col">
+              Email address
+              <span>
+                <button onClick={() => handleToggleSort("email")}>
+                  {sortDir === "asc" ? <ArrowUpZA /> : <ArrowDownAZ />}
+                </button>
+              </span>
+            </th>
             <th scope="col">Company</th>
             <th scope="col">Status</th>
             <th scope="col">Country</th>
