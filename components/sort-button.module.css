@@ -1,0 +1,8 @@
+.sortButton {
+  width: 2rem;
+  height: 2rem;
+  background-color: transparent;
+  border: none;
+  color: var(--accent-text);
+  cursor: pointer;
+}

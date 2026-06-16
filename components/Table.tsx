@@ -1,6 +1,6 @@
 import Person from "@/types/types";
 import styles from "./table.module.css";
-import { ArrowDownAZ, ArrowUpZA } from "lucide-react";
+import SortButton from "./Sort-button";
 import { useState } from "react";
 
 type TableProps = {
@@ -47,24 +47,55 @@ const Table = ({ page, pageSize, filteredList, columnNumber }: TableProps) => {
           <tr>
             <th scope="col">Avatar</th>
             <th scope="col">
-              Name
-              <span>
-                <button onClick={() => handleToggleSort("firstName")}>
-                  {sortDir === "asc" ? <ArrowUpZA /> : <ArrowDownAZ />}
-                </button>
-              </span>
+              <div className={styles.sortableColumn}>
+                Name
+                <SortButton
+                  field="lastName"
+                  sortDir={sortDir}
+                  handleToggleSort={handleToggleSort}
+                />
+              </div>
             </th>
             <th scope="col">
-              Email address
-              <span>
-                <button onClick={() => handleToggleSort("email")}>
-                  {sortDir === "asc" ? <ArrowUpZA /> : <ArrowDownAZ />}
-                </button>
-              </span>
+              <div className={styles.sortableColumn}>
+                Email Address
+                <SortButton
+                  field="email"
+                  sortDir={sortDir}
+                  handleToggleSort={handleToggleSort}
+                />
+              </div>
             </th>
-            <th scope="col">Company</th>
-            <th scope="col">Status</th>
-            <th scope="col">Country</th>
+            <th scope="col">
+              <div className={styles.sortableColumn}>
+                Company
+                <SortButton
+                  field="company"
+                  sortDir={sortDir}
+                  handleToggleSort={handleToggleSort}
+                />
+              </div>
+            </th>
+            <th scope="col">
+              <div className={styles.sortableColumn}>
+                Status
+                <SortButton
+                  field="status"
+                  sortDir={sortDir}
+                  handleToggleSort={handleToggleSort}
+                />
+              </div>
+            </th>
+            <th scope="col">
+              <div className={styles.sortableColumn}>
+                Country
+                <SortButton
+                  field="country"
+                  sortDir={sortDir}
+                  handleToggleSort={handleToggleSort}
+                />
+              </div>
+            </th>
           </tr>
         </thead>
         <tbody>
