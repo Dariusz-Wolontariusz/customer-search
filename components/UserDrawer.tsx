@@ -3,12 +3,17 @@ import Person from "@/types/types";
 import styles from "./userDrawer.module.css";
 
 type UserDrawerProps = {
-  selectedUser: Person;
+  selectedUser: Person | undefined;
+  handleCloseDrawer: () => void;
 };
 
-const UserDrawer = ({ selectedUser }: UserDrawerProps) => {
+const UserDrawer = ({ selectedUser, handleCloseDrawer }: UserDrawerProps) => {
+  if (!selectedUser) {
+    return null;
+  }
   return (
     <div className={styles.drawerContainer}>
+      <button onClick={handleCloseDrawer}>X</button>
       <h2>
         User {selectedUser.firstName} {selectedUser.lastName}
       </h2>

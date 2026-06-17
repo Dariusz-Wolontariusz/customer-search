@@ -96,12 +96,15 @@ const UserSearch = () => {
     setSelectedUserId(id);
   };
 
-  console.log(selectedUser);
+  const handleCloseDrawer = () => setSelectedUserId(null);
 
   return (
     <div className={styles.mainContainer}>
       <h1>Customer Search</h1>
-      {selectedUser && <UserDrawer selectedUser={selectedUser} />}
+      <UserDrawer
+        selectedUser={selectedUser}
+        handleCloseDrawer={handleCloseDrawer}
+      />
 
       <div className={styles.searchGroup}>
         <label htmlFor="searchField">Search User</label>

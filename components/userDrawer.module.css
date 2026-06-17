@@ -7,6 +7,8 @@
   background-color: black;
   outline: 3px solid mediumspringgreen;
   z-index: 1000;
+
+  transform: translatex(100%);
 }
 
 .avatar {
