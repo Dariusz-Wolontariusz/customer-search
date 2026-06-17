@@ -22,6 +22,10 @@
   background-color: var(--zebra);
 }
 
+.clickableRow {
+  cursor: pointer;
+}
+
 .sortableColumn {
   display: flex;
   justify-content: space-between;

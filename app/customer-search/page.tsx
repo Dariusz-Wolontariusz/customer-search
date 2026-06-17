@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { CircleAlert } from "lucide-react";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
+import UserDrawer from "@/components/UserDrawer";
 
 async function getUsers(): Promise<Person[]> {
   const response = await fetch("/mockData.json");
@@ -23,6 +24,7 @@ const UserSearch = () => {
   const [pageSize, setPageSize] = useState<number>(50);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
   const columnNumber = 3;
   const isFirstRun = useRef(true);
 
@@ -88,9 +90,19 @@ const UserSearch = () => {
       user.email.toLowerCase().includes(search.toLowerCase()),
   );
 
+  const selectedUser = filteredList.find((user) => selectedUserId === user.id);
+
+  const handleSelectUser = (id: number) => {
+    setSelectedUserId(id);
+  };
+
+  console.log(selectedUser);
+
   return (
     <div className={styles.mainContainer}>
       <h1>Customer Search</h1>
+      {selectedUser && <UserDrawer selectedUser={selectedUser} />}
+
       <div className={styles.searchGroup}>
         <label htmlFor="searchField">Search User</label>
         <input
@@ -149,6 +161,7 @@ const UserSearch = () => {
           pageSize={pageSize}
           filteredList={filteredList}
           columnNumber={columnNumber}
+          handleSelectUser={handleSelectUser}
         />
       )}
 

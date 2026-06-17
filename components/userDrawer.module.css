@@ -1,0 +1,15 @@
+.drawerContainer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 85vw;
+  background-color: black;
+  outline: 3px solid mediumspringgreen;
+  z-index: 1000;
+}
+
+.avatar {
+  height: 5rem;
+  width: 5rem;
+}

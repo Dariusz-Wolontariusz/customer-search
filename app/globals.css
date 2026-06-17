@@ -19,7 +19,6 @@
   --pill-inactive-text: #5f5e5a;
 }
 
-
 *,
 *::after,
 *::before {
@@ -28,10 +27,85 @@
   margin: 0;
 }
 
+:root {
+  --bg: #181022;
+  --text: #fdf4ff;
+  --accent: #f0abfc;
+  --accent-text: #2e1065;
+  --focus: #22d3ee;
+  --hover: #e879f9;
+  --disabled: #d6d3d1;
+  --zebra: #2a1838;
+  --error: #ff0000;
+  --error-bg: #fff2f2;
+  --error-text: #8a1f1f;
+  --error-border: #f3b4b4;
+  --pill-active-bg: #e1f5ee;
+  --pill-active-text: #0f6e56;
+  --pill-pending-bg: #faeeda;
+  --pill-pending-text: #854f0b;
+  --pill-inactive-bg: #f1efe8;
+  --pill-inactive-text: #5f5e5a;
+}
+
 body {
   margin: 0;
-  background-color: var(--bg);
+  background: var(--bg);
   color: var(--text);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+button,
+th,
+label {
+  font-family: var(--font-heading), var(--font-body), sans-serif;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+  font-weight: 800;
+}
+
+label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+input,
+select,
+td,
+p {
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+input,
+select {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+th {
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+td {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+table {
+  font-variant-numeric: tabular-nums;
 }
 
 @media (prefers-color-scheme: dark) {

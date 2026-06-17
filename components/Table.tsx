@@ -8,9 +8,16 @@ type TableProps = {
   pageSize: number;
   filteredList: Person[];
   columnNumber: number;
+  handleSelectUser: (id: number) => void;
 };
 
-const Table = ({ page, pageSize, filteredList, columnNumber }: TableProps) => {
+const Table = ({
+  page,
+  pageSize,
+  filteredList,
+  columnNumber,
+  handleSelectUser,
+}: TableProps) => {
   const [sortDir, setSortDir] = useState<"asc" | "dsc">("asc");
   const [sortField, setSortField] = useState<keyof Person>("firstName");
   const startIndex = (page - 1) * pageSize;
@@ -101,7 +108,11 @@ const Table = ({ page, pageSize, filteredList, columnNumber }: TableProps) => {
         <tbody>
           {visible.length > 0 ? (
             visible.map((user) => (
-              <tr key={user.id}>
+              <tr
+                className={styles.clickableRow}
+                key={user.id}
+                onClick={() => handleSelectUser(user.id)}
+              >
                 <td className={styles.avatarCell}>
                   <img
                     className={styles.avatar}
