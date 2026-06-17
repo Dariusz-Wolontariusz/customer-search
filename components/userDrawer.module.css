@@ -9,6 +9,11 @@
   z-index: 1000;
 
   transform: translatex(100%);
+  transition: transform ease 0.6s;
+}
+
+.open {
+  transform: translatex(0);
 }
 
 .avatar {
