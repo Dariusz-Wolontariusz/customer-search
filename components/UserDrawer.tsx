@@ -35,9 +35,17 @@ const UserDrawer = ({ selectedUser, handleCloseDrawer }: UserDrawerProps) => {
                 src={selectedUser.avatar}
                 alt={`${selectedUser.firstName} ${selectedUser.lastName}`}
               />
-              <h2 id="drawer-title">
-                {selectedUser.firstName} {selectedUser.lastName}
-              </h2>
+              <div>
+                <p className={styles.kicker}>Customer profile</p>
+                <h2 id="drawer-title">
+                  {selectedUser.firstName} {selectedUser.lastName}
+                </h2>
+                <span
+                  className={`${styles.statusPill} ${styles[selectedUser.status]}`}
+                >
+                  {selectedUser.status}
+                </span>
+              </div>
             </div>
 
             <div className={styles.sectionCard}>

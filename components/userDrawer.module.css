@@ -12,6 +12,9 @@
 }
 
 .drawerPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
   width: 100vw;
   height: 100%;
   padding: 2rem;
@@ -66,6 +69,22 @@
   gap: 2rem;
 }
 
+.kicker {
+  margin: 0 0 0.25rem;
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.header h2 {
+  margin: 0 0 0.65rem;
+  font-size: 1.75rem;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
 .avatar {
   height: 5rem;
   width: 5rem;
@@ -73,6 +92,33 @@
   border-radius: 1.5rem;
   border: 3px solid var(--accent);
   box-shadow: 0 0 28px var(--accent-transparent);
+}
+
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.active {
+  background: var(--pill-active-bg);
+  color: var(--pill-active-text);
+}
+
+.pending {
+  background: var(--pill-pending-bg);
+  color: var(--pill-pending-text);
+}
+
+.inactive {
+  background: var(--pill-inactive-bg);
+  color: var(--pill-inactive-text);
 }
 
 .sectionCard {
