@@ -30,7 +30,9 @@
 :root {
   --bg: #181022;
   --text: #fdf4ff;
+  --text-muted: #fdf4ff9e;
   --accent: #f0abfc;
+  --accent-transparent: #f0abfc34;
   --accent-text: #2e1065;
   --focus: #22d3ee;
   --hover: #e879f9;
@@ -46,6 +48,10 @@
   --pill-pending-text: #854f0b;
   --pill-inactive-bg: #f1efe8;
   --pill-inactive-text: #5f5e5a;
+  --section-bg: #ffffff0d;
+  --section-border: #ffffff1f;
+  --notes-bg: #22d3ee1a;
+  --notes-border: #22d3ee40;
 }
 
 body {
