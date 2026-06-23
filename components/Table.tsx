@@ -114,11 +114,13 @@ const Table = ({
                 onClick={() => handleSelectUser(user.id)}
               >
                 <td className={styles.avatarCell}>
-                  <img
-                    className={styles.avatar}
-                    src={user.avatar}
-                    alt="customers avatar"
-                  />
+                  <button
+                    className={styles.avatarButton}
+                    aria-label={`Open ${user.firstName} ${user.lastName} details`}
+                    onClick={() => handleSelectUser(user.id)}
+                  >
+                    <img className={styles.avatar} src={user.avatar} alt="" />
+                  </button>
                 </td>
                 <td>
                   {user.firstName} {user.lastName}

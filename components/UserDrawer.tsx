@@ -1,4 +1,5 @@
-import React from "react";
+import { useEffect } from "react";
+import { X } from "lucide-react";
 import Person from "@/types/types";
 import styles from "./userDrawer.module.css";
 
@@ -8,6 +9,27 @@ type UserDrawerProps = {
 };
 
 const UserDrawer = ({ selectedUser, handleCloseDrawer }: UserDrawerProps) => {
+  useEffect(() => {
+    if (!selectedUser) {
+      return;
+    }
+
+    const escapeKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        handleCloseDrawer();
+      }
+    };
+    document.addEventListener("keydown", escapeKey);
+
+    return () => {
+      document.removeEventListener("keydown", escapeKey);
+    };
+  }, [selectedUser]);
+
+  useEffect(() => {
+    return () => {}
+  })
+
   return (
     <div
       onClick={handleCloseDrawer}
@@ -27,7 +49,7 @@ const UserDrawer = ({ selectedUser, handleCloseDrawer }: UserDrawerProps) => {
               className={styles.closeButton}
               onClick={handleCloseDrawer}
             >
-              X
+              <X />
             </button>
             <div className={styles.header}>
               <img
