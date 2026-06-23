@@ -25,6 +25,7 @@ const UserDrawer = ({
       }
     };
     document.addEventListener("keydown", escapeKey);
+    console.log(new Date(selectedUser.createdAt).toLocaleDateString());
 
     return () => {
       document.removeEventListener("keydown", escapeKey);
@@ -143,11 +144,17 @@ const UserDrawer = ({
                 </div>
                 <div>
                   <dt>Account created </dt>
-                  <dd>{selectedUser.createdAt}</dd>
+                  <dd>
+                    {new Date(selectedUser.createdAt).toLocaleDateString()}
+                  </dd>
                 </div>
                 <div>
                   <dt>Last contacted </dt>
-                  <dd>{selectedUser.lastContactedAt}</dd>
+                  <dd>
+                    {new Date(
+                      selectedUser.lastContactedAt,
+                    ).toLocaleDateString()}
+                  </dd>
                 </div>
               </dl>
             </div>
