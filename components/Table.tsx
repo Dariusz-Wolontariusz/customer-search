@@ -8,7 +8,11 @@ type TableProps = {
   pageSize: number;
   filteredList: Person[];
   columnNumber: number;
-  handleSelectUser: (id: number) => void;
+  handleAvatarClick: (
+    id: number,
+    e: React.MouseEvent<HTMLButtonElement>,
+  ) => void;
+  handleRowClick: (id: number) => void;
 };
 
 const Table = ({
@@ -16,7 +20,8 @@ const Table = ({
   pageSize,
   filteredList,
   columnNumber,
-  handleSelectUser,
+  handleAvatarClick,
+  handleRowClick,
 }: TableProps) => {
   const [sortDir, setSortDir] = useState<"asc" | "dsc">("asc");
   const [sortField, setSortField] = useState<keyof Person>("firstName");
@@ -111,13 +116,13 @@ const Table = ({
               <tr
                 className={styles.clickableRow}
                 key={user.id}
-                onClick={() => handleSelectUser(user.id)}
+                onClick={() => handleRowClick(user.id)}
               >
                 <td className={styles.avatarCell}>
                   <button
                     className={styles.avatarButton}
                     aria-label={`Open ${user.firstName} ${user.lastName} details`}
-                    onClick={() => handleSelectUser(user.id)}
+                    onClick={(e) => handleAvatarClick(user.id, e)}
                   >
                     <img className={styles.avatar} src={user.avatar} alt="" />
                   </button>

@@ -26,7 +26,9 @@ const UserSearch = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
   const columnNumber = 3;
-  const isFirstRun = useRef(true);
+  const isFirstRun = useRef<boolean>(true);
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
 
   // Url query part
 
@@ -92,11 +94,29 @@ const UserSearch = () => {
 
   const selectedUser = filteredList.find((user) => selectedUserId === user.id);
 
-  const handleSelectUser = (id: number) => {
+  const handleAvatarClick = (
+    id: number,
+    e: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    setSelectedUserId(id);
+    triggerRef.current = e.currentTarget;
+  };
+
+  const handleRowClick = (id: number) => {
     setSelectedUserId(id);
   };
 
-  const handleCloseDrawer = () => setSelectedUserId(null);
+  const handleCloseDrawer = () => {
+    setSelectedUserId(null);
+  };
+
+  useEffect(() => {
+    if (selectedUserId !== null) {
+      closeButtonRef.current?.focus();
+    } else {
+      triggerRef.current?.focus();
+    }
+  }, [selectedUserId]);
 
   return (
     <div className={styles.mainContainer}>
@@ -104,6 +124,7 @@ const UserSearch = () => {
       <UserDrawer
         selectedUser={selectedUser}
         handleCloseDrawer={handleCloseDrawer}
+        closeButtonRef={closeButtonRef}
       />
 
       <div className={styles.searchGroup}>
@@ -164,7 +185,8 @@ const UserSearch = () => {
           pageSize={pageSize}
           filteredList={filteredList}
           columnNumber={columnNumber}
-          handleSelectUser={handleSelectUser}
+          handleAvatarClick={handleAvatarClick}
+          handleRowClick={handleRowClick}
         />
       )}
 

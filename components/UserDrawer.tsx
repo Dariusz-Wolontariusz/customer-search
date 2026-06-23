@@ -6,9 +6,14 @@ import styles from "./userDrawer.module.css";
 type UserDrawerProps = {
   selectedUser: Person | undefined;
   handleCloseDrawer: () => void;
+  closeButtonRef: React.RefObject<HTMLButtonElement | null>;
 };
 
-const UserDrawer = ({ selectedUser, handleCloseDrawer }: UserDrawerProps) => {
+const UserDrawer = ({
+  selectedUser,
+  handleCloseDrawer,
+  closeButtonRef,
+}: UserDrawerProps) => {
   useEffect(() => {
     if (!selectedUser) {
       return;
@@ -27,8 +32,8 @@ const UserDrawer = ({ selectedUser, handleCloseDrawer }: UserDrawerProps) => {
   }, [selectedUser]);
 
   useEffect(() => {
-    return () => {}
-  })
+    return () => {};
+  });
 
   return (
     <div
@@ -48,6 +53,7 @@ const UserDrawer = ({ selectedUser, handleCloseDrawer }: UserDrawerProps) => {
               aria-label="Close"
               className={styles.closeButton}
               onClick={handleCloseDrawer}
+              ref={closeButtonRef}
             >
               <X />
             </button>
