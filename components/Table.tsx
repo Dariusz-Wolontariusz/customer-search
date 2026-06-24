@@ -1,7 +1,7 @@
 import Person from "@/types/types";
 import styles from "./table.module.css";
 import SortButton from "./Sort-button";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 type TableProps = {
   page: number;
@@ -41,7 +41,11 @@ const Table = ({
     return 0;
   };
 
-  const sorted = filteredList.toSorted(comparator);
+  const sorted = useMemo(
+    () => filteredList.toSorted(comparator),
+    [sortField, sortDir, filteredList],
+  );
+
   const visible = sorted.slice(startIndex, startIndex + pageSize);
 
   const handleToggleSort = (field: keyof Person) => {
