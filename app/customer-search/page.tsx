@@ -126,76 +126,80 @@ const UserSearch = () => {
         handleCloseDrawer={handleCloseDrawer}
         closeButtonRef={closeButtonRef}
       />
-
-      <div className={styles.searchGroup}>
-        <label htmlFor="searchField">Search User</label>
-        <input
-          id="searchField"
-          className={styles.inputField}
-          type="text"
-          placeholder="Search user"
-          onChange={(e) => setSearchWordInput(e.target.value)}
-          value={searchWordInput}
-        />
-      </div>
-
-      {isLoading && <p>Loading data...</p>}
-      {error && (
-        <p className={styles.errorAlert} role="alert">
-          <CircleAlert className={styles.errorIcon} size={20} />
-          <span>{error}</span>
-        </p>
-      )}
-
-      {/* matches */}
-
-      {filteredList && (
-        <div className={styles.matchesContainer}>
-          <p>Found {filteredList.length} matches.</p>
-          <div className={styles.selectAmountItemsContainer}>
-            <label htmlFor="selectAmoutItems">Items per page:</label>
-            <select
-              className={styles.selectAmountItems}
-              id="selectAmoutItems"
-              onChange={(e) => {
-                setPageSize(+e.target.value);
-                goToPage(1);
-              }}
-              defaultValue={50}
-            >
-              <option value="25">25</option>
-              <option value="50">50</option>
-              <option value="75">75</option>
-              <option value="100">100</option>
-            </select>
-          </div>
+      <div
+        className={styles.backgroundContainer}
+        inert={selectedUser ? true : undefined}
+      >
+        <div className={styles.searchGroup}>
+          <label htmlFor="searchField">Search User</label>
+          <input
+            id="searchField"
+            className={styles.inputField}
+            type="text"
+            placeholder="Search user"
+            onChange={(e) => setSearchWordInput(e.target.value)}
+            value={searchWordInput}
+          />
         </div>
-      )}
 
-      <Pagination
-        page={page}
-        pageSize={pageSize}
-        goToPage={goToPage}
-        filteredList={filteredList}
-      />
+        {isLoading && <p>Loading data...</p>}
+        {error && (
+          <p className={styles.errorAlert} role="alert">
+            <CircleAlert className={styles.errorIcon} size={20} />
+            <span>{error}</span>
+          </p>
+        )}
 
-      {!isLoading && !error && (
-        <Table
+        {/* matches */}
+
+        {filteredList && (
+          <div className={styles.matchesContainer}>
+            <p>Found {filteredList.length} matches.</p>
+            <div className={styles.selectAmountItemsContainer}>
+              <label htmlFor="selectAmoutItems">Items per page:</label>
+              <select
+                className={styles.selectAmountItems}
+                id="selectAmoutItems"
+                onChange={(e) => {
+                  setPageSize(+e.target.value);
+                  goToPage(1);
+                }}
+                defaultValue={50}
+              >
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="75">75</option>
+                <option value="100">100</option>
+              </select>
+            </div>
+          </div>
+        )}
+
+        <Pagination
           page={page}
           pageSize={pageSize}
+          goToPage={goToPage}
           filteredList={filteredList}
-          columnNumber={columnNumber}
-          handleAvatarClick={handleAvatarClick}
-          handleRowClick={handleRowClick}
         />
-      )}
 
-      <Pagination
-        page={page}
-        pageSize={pageSize}
-        goToPage={goToPage}
-        filteredList={filteredList}
-      />
+        {!isLoading && !error && (
+          <Table
+            page={page}
+            pageSize={pageSize}
+            filteredList={filteredList}
+            columnNumber={columnNumber}
+            handleAvatarClick={handleAvatarClick}
+            handleRowClick={handleRowClick}
+          />
+        )}
+
+        <Pagination
+          page={page}
+          pageSize={pageSize}
+          goToPage={goToPage}
+          filteredList={filteredList}
+        />
+      </div>
     </div>
   );
 };

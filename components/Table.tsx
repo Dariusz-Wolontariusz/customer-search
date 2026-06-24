@@ -45,7 +45,6 @@ const Table = ({
     () => filteredList.toSorted(comparator),
     [sortField, sortDir, filteredList],
   );
-
   const visible = sorted.slice(startIndex, startIndex + pageSize);
 
   const handleToggleSort = (field: keyof Person) => {
@@ -128,7 +127,12 @@ const Table = ({
                     aria-label={`Open ${user.firstName} ${user.lastName} details`}
                     onClick={(e) => handleAvatarClick(user.id, e)}
                   >
-                    <img className={styles.avatar} src={user.avatar} alt="" />
+                    <img
+                      className={styles.avatar}
+                      src={user.avatar}
+                      alt=""
+                      loading="lazy"
+                    />
                   </button>
                 </td>
                 <td>
