@@ -67,16 +67,19 @@ const Pagination = ({
                     </div>
                   ))}
 
-              {windowEnd < totalPages - 1 && <span>...</span>}
-
-              <button
-                className={`${styles.pageBtn} ${
-                  page === pageArr.at(-1) ? styles.active : ""
-                }`}
-                onClick={() => goToPage(pageArr.at(-1) ?? 1)}
-              >
-                {pageArr.at(-1)}
-              </button>
+              {totalPages > 1 && windowEnd < totalPages - 1 && (
+                <span>...</span>
+              )}
+              {totalPages > 1 && (
+                <button
+                  className={`${styles.pageBtn} ${
+                    page === pageArr.at(-1) ? styles.active : ""
+                  }`}
+                  onClick={() => goToPage(pageArr.at(-1) ?? 1)}
+                >
+                  {pageArr.at(-1)}
+                </button>
+              )}
             </div>
 
             <button

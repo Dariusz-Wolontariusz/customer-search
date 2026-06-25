@@ -1,0 +1,27 @@
+This is the list of tests i want to do 1. Pure functions / unit tests (you've started here — easiest, most valuable)
+
+* ✅ total pages
+* ✅ filterList
+* ✅ The `comparator` — sort logic. Test it directly: feed two `Person` objects, assert the return sign. Cover string fields (`localeCompare`), number fields (subtraction), and direction flip (`asc` vs `dsc`).
+
+2. Component rendering tests (React Testing Library — render, assert what's on screen)
+
+* Table renders the right number of rows for a given page.
+* "Found X matches" shows the correct count.
+* Loading state shows while loading; error state shows on failure.
+* Empty state — what renders when `filteredList` is empty?
+
+3. Interaction tests (simulate user actions)
+
+* Typing in search → updates (the debounce makes this tricky — we'd handle timers).
+* Clicking a row / avatar → drawer opens (selected user appears).
+* Clicking close → drawer closes.
+* Clicking a sort column → order changes.
+
+4. Accessibility tests (your strength — lean in)
+
+* Escape key closes the drawer.
+* Drawer has correct `role="dialog"`, `aria-modal`, `aria-labelledby`.
+* Avatar button has the right accessible name (`aria-label`).
+* Focus moves to close button on open (this one's tricky in jsdom — worth knowing the limits).
+Next is Date formatting. I already did comparator

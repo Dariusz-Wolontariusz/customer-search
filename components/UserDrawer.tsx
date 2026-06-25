@@ -25,7 +25,6 @@ const UserDrawer = ({
       }
     };
     document.addEventListener("keydown", escapeKey);
-    console.log(new Date(selectedUser.createdAt).toLocaleDateString());
 
     return () => {
       document.removeEventListener("keydown", escapeKey);
