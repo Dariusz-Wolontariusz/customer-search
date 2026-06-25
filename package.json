@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "generate:users": "tsx scripts/generate-users.ts"
+    "generate:users": "tsx scripts/generate-users.ts",
+    "test": "vitest"
   },
   "dependencies": {
     "lucide-react": "^1.18.0",
@@ -23,6 +24,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
     "tsx": "^4.22.4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.9"
   }
 }
