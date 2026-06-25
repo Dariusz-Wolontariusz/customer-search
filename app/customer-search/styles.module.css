@@ -12,6 +12,12 @@
   text-align: center;
 }
 
+.backgroundContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
 .searchGroup {
   display: flex;
   flex-direction: column;

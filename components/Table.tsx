@@ -1,6 +1,7 @@
 import Person from "@/types/types";
 import styles from "./table.module.css";
 import SortButton from "./Sort-button";
+import Image from "next/image";
 import { useState, useMemo } from "react";
 
 type TableProps = {
@@ -127,11 +128,12 @@ const Table = ({
                     aria-label={`Open ${user.firstName} ${user.lastName} details`}
                     onClick={(e) => handleAvatarClick(user.id, e)}
                   >
-                    <img
+                    <Image
                       className={styles.avatar}
                       src={user.avatar}
                       alt=""
-                      loading="lazy"
+                      width={48}
+                      height={48}
                     />
                   </button>
                 </td>
