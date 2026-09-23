@@ -1,66 +1,87 @@
-import Image from "next/image";
+"use client";
+
+import { useState, useRef } from "react";
+import Person from "@/types/types";
+import Table from "@/components/Table";
+import Pagination from "@/components/Pagination";
+import UserDrawer from "@/components/UserDrawer";
+import { listFilter } from "@/utils/listFilter";
+import mockData from "@/public/mockData.json";
 import styles from "./page.module.css";
 
+const PAGE_SIZE = 10;
+const COLUMN_NUMBER = 6;
+
 export default function Home() {
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [selectedUser, setSelectedUser] = useState<Person | undefined>(
+    undefined,
+  );
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  const users = mockData as Person[];
+  const filteredList = listFilter(users, search);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+    setPage(1);
+  };
+
+  const handleRowClick = (id: number) => {
+    setSelectedUser(users.find((u) => u.id === id));
+    setTimeout(() => closeButtonRef.current?.focus(), 0);
+  };
+
+  const handleAvatarClick = (
+    id: number,
+    e: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    e.stopPropagation();
+    setSelectedUser(users.find((u) => u.id === id));
+    setTimeout(() => closeButtonRef.current?.focus(), 0);
+  };
+
+  const handleCloseDrawer = () => setSelectedUser(undefined);
+
   return (
     <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+      <header className={styles.header}>
+        <h1>Customers</h1>
+        <div className={styles.searchWrapper}>
+          <label htmlFor="search">Search</label>
+          <input
+            id="search"
+            type="search"
+            placeholder="Search by name or email…"
+            value={search}
+            onChange={handleSearch}
+            className={styles.searchInput}
+          />
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </header>
+
+      <Table
+        page={page}
+        pageSize={PAGE_SIZE}
+        filteredList={filteredList}
+        columnNumber={COLUMN_NUMBER}
+        handleAvatarClick={handleAvatarClick}
+        handleRowClick={handleRowClick}
+      />
+
+      <Pagination
+        page={page}
+        pageSize={PAGE_SIZE}
+        filteredList={filteredList}
+        goToPage={setPage}
+      />
+
+      <UserDrawer
+        selectedUser={selectedUser}
+        handleCloseDrawer={handleCloseDrawer}
+        closeButtonRef={closeButtonRef}
+      />
     </div>
   );
 }
