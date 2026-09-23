@@ -2,7 +2,7 @@
 
 import styles from "./styles.module.css";
 import Person from "@/types/types";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { CircleAlert } from "lucide-react";
 import Pagination from "@/components/Pagination";
@@ -19,7 +19,7 @@ async function getUsers(): Promise<Person[]> {
   throw new Error("Something went wrong while fetching the data.");
 }
 
-const UserSearch = () => {
+const UserSearchContent = () => {
   const [usersList, setUsersList] = useState<Person[]>([]);
   const [pageSize, setPageSize] = useState<number>(50);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -202,6 +202,12 @@ const UserSearch = () => {
       </div>
     </div>
   );
+};
+
+const UserSearch = () => {
+  <Suspense fallback={<p>Loading...</p>}>
+    <UserSearchContent />
+  </Suspense>;
 };
 
 export default UserSearch;
