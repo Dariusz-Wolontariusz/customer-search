@@ -1,0 +1,23 @@
+CREATE TABLE customers (
+  id INTEGER PRIMARY KEY,
+  first_name TEXT,
+  last_name TEXT,
+  email TEXT,
+  phone TEXT,
+  avatar TEXT,
+  job_title TEXT,
+  company TEXT,
+  department TEXT,
+  city TEXT,
+  country TEXT,
+  address TEXT,
+  postal_code TEXT,
+  status TEXT,
+  customer_type TEXT,
+  created_at TIMESTAMPTZ,
+  last_contacted_at TIMESTAMPTZ,
+  total_orders INTEGER,
+  total_spent NUMERIC(12, 2),
+  currency TEXT,
+  notes TEXT
+);
