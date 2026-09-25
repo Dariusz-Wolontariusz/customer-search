@@ -205,9 +205,11 @@ const UserSearchContent = () => {
 };
 
 const UserSearch = () => {
-  <Suspense fallback={<p>Loading...</p>}>
-    <UserSearchContent />
-  </Suspense>;
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <UserSearchContent />
+    </Suspense>
+  );
 };
 
 export default UserSearch;
