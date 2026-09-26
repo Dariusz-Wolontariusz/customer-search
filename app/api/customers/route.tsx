@@ -14,8 +14,10 @@ export async function GET(request: Request) {
   const res =
     await sql`SELECT * FROM customers WHERE (first_name || ' ' || last_name || ' ' || email) ILIKE ${searchPattern} ORDER BY id LIMIT ${pageSize} OFFSET ${offset}`;
 
-  const totalMatches =
+  const totalRawMatches =
     await sql`SELECT COUNT(*) FROM customers WHERE (first_name || ' ' || last_name || ' ' || email) ILIKE ${searchPattern}`;
+
+  const totalMatches = Number(totalRawMatches[0].count);
 
   return Response.json({ customers: res, total: totalMatches });
 }

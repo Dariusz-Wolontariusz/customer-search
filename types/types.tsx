@@ -1,4 +1,4 @@
-type Person = {
+export type Person = {
   id: number;
   firstName: string;
   lastName: string;
@@ -33,4 +33,7 @@ type Person = {
   notes: string;
 };
 
-export default Person;
+export type ApiResponse = {
+  customers: Person[];
+  total: number;
+};

@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./styles.module.css";
-import Person from "@/types/types";
+import { Person, ApiResponse } from "@/types/types";
 import { useEffect, useState, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { CircleAlert } from "lucide-react";
@@ -9,11 +9,23 @@ import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import UserDrawer from "@/components/UserDrawer";
 
-async function getUsers(): Promise<Person[]> {
-  const response = await fetch("/mockData.json");
+async function getUsers(
+  pageSize: number,
+  page: number,
+  search: string,
+): Promise<ApiResponse> {
+  const params = new URLSearchParams();
+  params.set("page", String(page));
+  params.set("pageSize", String(pageSize));
+  params.set("search", search);
+
+  const apiUrl = `/api/customers?${params.toString()}`;
+
+  const response = await fetch(apiUrl);
 
   if (response.ok) {
-    const data: Person[] = await response.json();
+    const data: ApiResponse = await response.json();
+    console.log(data);
     return data;
   }
   throw new Error("Something went wrong while fetching the data.");
@@ -30,7 +42,7 @@ const UserSearchContent = () => {
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
 
-  // Url query part
+  // Url query build
 
   const searchParams = useSearchParams();
   const search = searchParams.get("search") ?? "";
@@ -49,8 +61,8 @@ const UserSearchContent = () => {
       try {
         setError(null);
 
-        const data = await getUsers();
-        setUsersList(data);
+        const data = await getUsers(page, pageSize, search);
+        setUsersList(data.customers);
 
         return usersList;
       } catch (error) {
