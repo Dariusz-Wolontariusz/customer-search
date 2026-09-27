@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import Person from "@/types/types";
+import { Person } from "@/types/types";
 import { listFilter } from "./listFilter";
 
 describe("listFilter", () => {

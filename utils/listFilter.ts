@@ -1,4 +1,4 @@
-import Person from "@/types/types";
+import { Person } from "@/types/types";
 
 export function listFilter(usersList: Person[], search: string) {
   const filteredList = usersList.filter(

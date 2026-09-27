@@ -1,4 +1,4 @@
-import Person from "@/types/types";
+import { Person } from "@/types/types";
 
 export function makeComparator(
   sortField: keyof Person,

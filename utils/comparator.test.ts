@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { makeComparator } from "./comparator";
-import Person from "@/types/types";
+import { Person } from "@/types/types";
 
 describe("makeComparator", () => {
   it("should sort first name ascending in alphabetical order", () => {
