@@ -1,5 +1,5 @@
 "use client";
-import Person from "@/types/types";
+import { Person } from "@/types/types";
 import { ArrowDownAZ, ArrowUpZA } from "lucide-react";
 import styles from "./sort-button.module.css";
 

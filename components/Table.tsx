@@ -1,13 +1,11 @@
-import Person from "@/types/types";
+import { Person } from "@/types/types";
 import styles from "./table.module.css";
 import SortButton from "./Sort-button";
 import Image from "next/image";
 import { useState, useMemo } from "react";
 
 type TableProps = {
-  page: number;
-  pageSize: number;
-  filteredList: Person[];
+  usersList: Person[];
   columnNumber: number;
   handleAvatarClick: (
     id: number,
@@ -17,16 +15,13 @@ type TableProps = {
 };
 
 const Table = ({
-  page,
-  pageSize,
-  filteredList,
+  usersList,
   columnNumber,
   handleAvatarClick,
   handleRowClick,
 }: TableProps) => {
   const [sortDir, setSortDir] = useState<"asc" | "dsc">("asc");
   const [sortField, setSortField] = useState<keyof Person>("firstName");
-  const startIndex = (page - 1) * pageSize;
 
   const comparator = (a: Person, b: Person) => {
     const aVal = a[sortField];
@@ -43,10 +38,10 @@ const Table = ({
   };
 
   const sorted = useMemo(
-    () => filteredList.toSorted(comparator),
-    [sortField, sortDir, filteredList],
+    () => usersList.toSorted(comparator),
+    [sortField, sortDir, usersList],
   );
-  const visible = sorted.slice(startIndex, startIndex + pageSize);
+  // const sorted = sorted.slice(startIndex, startIndex + pageSize);
 
   const handleToggleSort = (field: keyof Person) => {
     setSortField(field);
@@ -115,8 +110,8 @@ const Table = ({
           </tr>
         </thead>
         <tbody>
-          {visible.length > 0 ? (
-            visible.map((user) => (
+          {sorted.length > 0 ? (
+            sorted.map((user) => (
               <tr
                 className={styles.clickableRow}
                 key={user.id}

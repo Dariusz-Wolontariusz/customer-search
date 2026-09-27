@@ -10,8 +10,8 @@ import Table from "@/components/Table";
 import UserDrawer from "@/components/UserDrawer";
 
 async function getUsers(
-  pageSize: number,
   page: number,
+  pageSize: number,
   search: string,
 ): Promise<ApiResponse> {
   const params = new URLSearchParams();
@@ -25,7 +25,6 @@ async function getUsers(
 
   if (response.ok) {
     const data: ApiResponse = await response.json();
-    console.log(data);
     return data;
   }
   throw new Error("Something went wrong while fetching the data.");
@@ -33,6 +32,7 @@ async function getUsers(
 
 const UserSearchContent = () => {
   const [usersList, setUsersList] = useState<Person[]>([]);
+  const [totalMatches, setTotalMatches] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(50);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -59,12 +59,12 @@ const UserSearchContent = () => {
   useEffect(() => {
     const load = async () => {
       try {
+        setIsLoading(true);
         setError(null);
 
         const data = await getUsers(page, pageSize, search);
         setUsersList(data.customers);
-
-        return usersList;
+        setTotalMatches(data.total);
       } catch (error) {
         setError(
           "Could not load the customers list. Please refresh the screen to try again.",
@@ -76,7 +76,7 @@ const UserSearchContent = () => {
     };
 
     load();
-  }, []);
+  }, [page, search, pageSize]);
 
   useEffect(() => {
     const updateUrl = (searchWordInput: string) => {
@@ -97,14 +97,7 @@ const UserSearchContent = () => {
     return () => clearTimeout(debouncedSearch);
   }, [searchWordInput]);
 
-  const filteredList = usersList.filter(
-    (user) =>
-      user.firstName.toLowerCase().includes(search.toLowerCase()) ||
-      user.lastName.toLowerCase().includes(search.toLowerCase()) ||
-      user.email.toLowerCase().includes(search.toLowerCase()),
-  );
-
-  const selectedUser = filteredList.find((user) => selectedUserId === user.id);
+  const selectedUser = usersList.find((user) => selectedUserId === user.id);
 
   const handleAvatarClick = (
     id: number,
@@ -164,9 +157,9 @@ const UserSearchContent = () => {
 
         {/* matches */}
 
-        {filteredList && (
+        {
           <div className={styles.matchesContainer}>
-            <p>Found {filteredList.length} matches.</p>
+            <p>Found {totalMatches} matches.</p>
             <div className={styles.selectAmountItemsContainer}>
               <label htmlFor="selectAmoutItems">Items per page:</label>
               <select
@@ -185,32 +178,36 @@ const UserSearchContent = () => {
               </select>
             </div>
           </div>
-        )}
+        }
 
-        <Pagination
-          page={page}
-          pageSize={pageSize}
-          goToPage={goToPage}
-          filteredList={filteredList}
-        />
+        {!isLoading && !error && (
+          <Pagination
+            page={page}
+            pageSize={pageSize}
+            goToPage={goToPage}
+            usersList={usersList}
+            totalMatches={totalMatches}
+          />
+        )}
 
         {!isLoading && !error && (
           <Table
-            page={page}
-            pageSize={pageSize}
-            filteredList={filteredList}
+            usersList={usersList}
             columnNumber={columnNumber}
             handleAvatarClick={handleAvatarClick}
             handleRowClick={handleRowClick}
           />
         )}
 
-        <Pagination
-          page={page}
-          pageSize={pageSize}
-          goToPage={goToPage}
-          filteredList={filteredList}
-        />
+        {!isLoading && !error && (
+          <Pagination
+            page={page}
+            pageSize={pageSize}
+            goToPage={goToPage}
+            usersList={usersList}
+            totalMatches={totalMatches}
+          />
+        )}
       </div>
     </div>
   );

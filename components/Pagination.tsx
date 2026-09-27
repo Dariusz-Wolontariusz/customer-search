@@ -1,30 +1,32 @@
 import React from "react";
-import Person from "@/types/types";
+import { Person } from "@/types/types";
 import styles from "./pagination.module.css";
 
 type PaginationProps = {
   page: number;
   pageSize: number;
-  filteredList: Person[];
+  usersList: Person[];
+  totalMatches: number;
   goToPage: (n: number) => void;
 };
 
 const Pagination = ({
   page,
   pageSize,
-  filteredList,
+  usersList,
+  totalMatches,
   goToPage,
 }: PaginationProps) => {
   const handlePrev = () => goToPage(page - 1);
   const handleNext = () => goToPage(page + 1);
-  const totalPages = Math.ceil(filteredList.length / pageSize);
+  const totalPages = Math.ceil(totalMatches / pageSize);
   const pageArr = Array.from({ length: totalPages }, (value, idx) => idx + 1);
   const windowStart = Math.max(page - 1, 1);
   const windowEnd = windowStart + 2;
 
   return (
     <>
-      {filteredList && (
+      {
         <div className={styles.buttonContainer}>
           <div className={styles.controllBtnContainer}>
             <button
@@ -67,9 +69,7 @@ const Pagination = ({
                     </div>
                   ))}
 
-              {totalPages > 1 && windowEnd < totalPages - 1 && (
-                <span>...</span>
-              )}
+              {totalPages > 1 && windowEnd < totalPages - 1 && <span>...</span>}
               {totalPages > 1 && (
                 <button
                   className={`${styles.pageBtn} ${
@@ -85,13 +85,13 @@ const Pagination = ({
             <button
               className={styles.controllBtn}
               onClick={handleNext}
-              disabled={page === Math.ceil(filteredList.length / pageSize)}
+              disabled={page >= totalPages}
             >
               Next
             </button>
           </div>
         </div>
-      )}
+      }
     </>
   );
 };

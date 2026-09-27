@@ -19,5 +19,31 @@ export async function GET(request: Request) {
 
   const totalMatches = Number(totalRawMatches[0].count);
 
-  return Response.json({ customers: res, total: totalMatches });
+  //name translation from SQL to TS
+
+  const customers = res.map((row) => ({
+    id: row.id,
+    firstName: row.first_name,
+    lastName: row.last_name,
+    email: row.email,
+    phone: row.phone,
+    avatar: row.avatar,
+    jobTitle: row.job_title,
+    company: row.company,
+    department: row.department,
+    city: row.city,
+    country: row.country,
+    address: row.address,
+    postalCode: row.postal_code,
+    status: row.status,
+    customerType: row.customer_type,
+    createdAt: row.created_at,
+    lastContactedAt: row.last_contacted_at,
+    totalOrders: row.total_orders,
+    totalSpent: Number(row.total_spent),
+    currency: row.currency,
+    notes: row.notes,
+  }));
+
+  return Response.json({ customers: customers, total: totalMatches });
 }
