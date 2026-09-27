@@ -1,7 +1,7 @@
 import { screen, render } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import Pagination from "./Pagination";
-import Person from "@/types/types";
+import { Person } from "@/types/types";
 
 describe("Pagination", () => {
   it("should show last page button", () => {
@@ -9,8 +9,9 @@ describe("Pagination", () => {
       <Pagination
         page={1}
         pageSize={10}
-        filteredList={persons}
+        usersList={persons}
         goToPage={() => {}}
+        totalMatches={6}
       />,
     );
     expect(screen.getByText("1")).toBeInTheDocument();

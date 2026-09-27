@@ -1,5 +1,5 @@
 import React from "react";
-import Person from "@/types/types";
+import { Person } from "@/types/types";
 import styles from "./userDrawer.module.css";
 
 type UserDrawerProps = {
