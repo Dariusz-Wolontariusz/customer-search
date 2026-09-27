@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { X } from "lucide-react";
-import Person from "@/types/types";
+import { Person } from "@/types/types";
 import styles from "./userDrawer.module.css";
 
 type UserDrawerProps = {
