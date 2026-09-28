@@ -103,7 +103,7 @@
 
 .cardContainer {
   list-style: none;
-  padding: 0;
+  padding-inline: 2rem;
   margin: 0;
   display: grid;
   grid-template-columns: 1fr;
@@ -115,7 +115,6 @@
   border: 1px solid var(--section-border);
   padding: 1.125rem;
   border-radius: 1.125rem;
-  /* background-color: var(--section-bg); */
   background:
     radial-gradient(
       circle at top left,
@@ -123,6 +122,17 @@
       transparent 32rem
     ),
     linear-gradient(180deg, var(--zebra) 40%, var(--bg) 100%);
+  transition:
+    background-color 0.3s,
+    transform 0.3s;
+}
+
+.cardContainer li:hover {
+  background:
+    radial-gradient(circle at top left, #f0abfc45, transparent 32rem),
+    linear-gradient(180deg, #321d43 40%, #1d1227 100%);
+  border-color: var(--hover-border-secondary);
+  transform: translateY(-3px);
 }
 
 .cardContainer h3 {

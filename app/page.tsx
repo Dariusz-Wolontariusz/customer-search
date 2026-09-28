@@ -27,34 +27,40 @@ function StartPage() {
         </div>
       </section>
       <section className={styles.cardSection}>
-        <h2>What I built</h2>
+        <h2>How it's built</h2>
         <ul className={styles.cardContainer}>
           <li>
-            <h3>Real database</h3>
+            <h3>Real database instead of a static file</h3>
             <p>
-              36 MB JSON was too big to deploy. Moved 50,000 records to Postgres
-              on Neon, seeded in batches of 1,000
+              The first version shipped all 50,000 customer records as one
+              nearly 50 MB file that every visitor had to download. I moved the
+              data into PostgreSQL (hosted on Neon), so the browser only
+              receives what it actually shows.
             </p>
           </li>
           <li>
             <h3>Server-side search and pagination</h3>
             <p>
-              An API route searches in the database and sends only one page to
-              the browser
+              Search and paging run in the database through a Next.js API route.
+              The browser gets one page of results at a time (25 to 100 rows),
+              no matter how large the dataset grows.
             </p>
           </li>
           <li>
-            <h3>Search in the URL + debounce</h3>
+            <h3>Shareable, efficient search</h3>
             <p>
-              Links can be shared, and the database gets one request when the
-              user pauses, not one per letter
+              The search term and page number live in the URL, so any result can
+              be bookmarked or shared. Typing is debounced by 500 ms, so the
+              database gets one query when the user pauses, not one per
+              keystroke.
             </p>
           </li>
           <li>
             <h3>Accessibility</h3>
             <p>
-              Customer drawer with focus management, Escape to close, background
-              locked with inert, keyboard-reachable rows
+              The customer panel works fully by keyboard: focus moves into it on
+              open, Escape closes it, and focus returns to the row that opened
+              it. The page behind is locked while the panel is open.
             </p>
           </li>
         </ul>
