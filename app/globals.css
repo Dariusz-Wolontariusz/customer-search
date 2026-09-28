@@ -35,7 +35,12 @@
   --accent-transparent: #f0abfc34;
   --accent-text: #2e1065;
   --focus: #22d3ee;
-  --hover: #e879f9;
+  --hover: #f5c2ff;
+  --active: #d946ef;
+  --hover-secondary: #ffffff12;
+  --hover-border-secondary: #ffffff40;
+  --active-secondary: #ffffff1f;
+  --active-border-secondary: #ffffff60;
   --disabled: #d6d3d1;
   --zebra: #2a1838;
   --error: #ff0000;
