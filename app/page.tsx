@@ -73,11 +73,12 @@ function StartPage() {
           <li>TypeScript</li>
           <li>PostgreSQL</li>
           <li>Neon</li>
-          <li>Vitest</li>
+          {/* <li>Vitest</li> */}
           <li>CSS Modules</li>
           <li>Vercel</li>
         </ul>
       </section>
+    
     </main>
   );
 }
