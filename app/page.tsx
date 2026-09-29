@@ -8,8 +8,9 @@ function StartPage() {
         <div className={styles.titleContainer}>
           <h1>Customer Search</h1>
           <p>
-            Search, sort and browse 50,000 customers, built with TypeScript,
-            Next.js and PostgreSQL.
+            Portfolio project by Dariusz Ciazynski: a customer search app over
+            50,000 generated records, built with Next.js, TypeScript and
+            PostgreSQL.
           </p>
         </div>
         <div className={styles.linksContainer}>
@@ -28,7 +29,7 @@ function StartPage() {
       </section>
       <section className={styles.cardSection}>
         <h2>How it's built</h2>
-        <ul className={styles.cardContainer}>
+        <ul className={styles.cardContainer} role="list">
           <li>
             <h3>Real database instead of a static file</h3>
             <p>
@@ -63,6 +64,18 @@ function StartPage() {
               it. The page behind is locked while the panel is open.
             </p>
           </li>
+        </ul>
+      </section>
+      <section className={styles.techStackContainer}>
+        <h2>Tech stack</h2>
+        <ul className={styles.techStackList} role="list">
+          <li>Next.js</li>
+          <li>TypeScript</li>
+          <li>PostgreSQL</li>
+          <li>Neon</li>
+          <li>Vitest</li>
+          <li>CSS Modules</li>
+          <li>Vercel</li>
         </ul>
       </section>
     </main>
