@@ -115,7 +115,7 @@
       transparent 32rem
     ),
     linear-gradient(180deg, var(--zebra) 40%, var(--bg) 100%);
-  transition: background-color 0.3s;
+  transition: background 0.3s;
 }
 
 .cardContainer li:hover {
@@ -146,6 +146,7 @@
   border-radius: 1.125rem;
   color: var(--text);
   padding: 1rem 1.5rem 2rem;
+  margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -179,16 +180,40 @@
   border-top: 1px solid var(--section-border);
   color: var(--text-muted);
   font-size: 0.875rem;
+  padding: 1.5rem;
+}
+
+.footerInner {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.8rem;
+  max-width: 72rem;
+  margin-inline: auto;
 }
 
 .footerList {
   list-style: none;
   display: flex;
   gap: 1rem;
+}
+
+.footerList a {
+  border-radius: 0.75rem;
+  padding: 0.3rem;
+}
+
+.footerList a:hover {
+  color: var(--text);
+}
+
+.footerList a:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+.footerList a:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
 }
 
 @media (min-width: 48rem) {
@@ -218,10 +243,9 @@
     max-width: 50rem;
   }
 
-  .footer {
-    max-width: 72rem;
-    margin-inline: auto;
+  .footerInner {
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 3rem;
   }
 }

@@ -35,7 +35,7 @@ function StartPage() {
               <h3>Real database instead of a static file</h3>
               <p>
                 The first version shipped all 50,000 customer records as one
-                nearly 50 MB file that every visitor had to download. I moved
+                nearly 40 MB file that every visitor had to download. I moved
                 the data into PostgreSQL (hosted on Neon), so the browser only
                 receives what it actually shows.
               </p>
@@ -79,7 +79,9 @@ function StartPage() {
             <li>Vercel</li>
           </ul>
         </section>
-        <footer className={styles.footer}>
+      </main>
+      <footer className={styles.footer}>
+        <div className={styles.footerInner}>
           <p>Built by Dariusz Ciazynski</p>
           <ul role="list" className={styles.footerList}>
             <li>
@@ -110,8 +112,8 @@ function StartPage() {
               </a>
             </li>
           </ul>
-        </footer>
-      </main>
+        </div>
+      </footer>
     </>
   );
 }
