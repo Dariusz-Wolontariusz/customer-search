@@ -3,6 +3,7 @@ import styles from "./table.module.css";
 import SortButton from "./Sort-button";
 import Image from "next/image";
 import { useState, useMemo } from "react";
+import { SortColumns } from "@/types/types";
 
 type TableProps = {
   usersList: Person[];
@@ -12,6 +13,8 @@ type TableProps = {
     e: React.MouseEvent<HTMLButtonElement>,
   ) => void;
   handleRowClick: (id: number) => void;
+  handleToggleSort: (field: SortColumns) => void;
+  sortDir: "asc" | "dsc";
 };
 
 const Table = ({
@@ -19,37 +22,27 @@ const Table = ({
   columnNumber,
   handleAvatarClick,
   handleRowClick,
+  handleToggleSort,
+  sortDir,
 }: TableProps) => {
-  const [sortDir, setSortDir] = useState<"asc" | "dsc">("asc");
-  const [sortField, setSortField] = useState<keyof Person>("firstName");
+  // const comparator = (a: Person, b: Person) => {
+  //   const aVal = a[sortField];
+  //   const bVal = b[sortField];
 
-  const comparator = (a: Person, b: Person) => {
-    const aVal = a[sortField];
-    const bVal = b[sortField];
+  //   if (typeof aVal === "string" && typeof bVal === "string") {
+  //     const result = aVal.localeCompare(bVal);
+  //     return sortDir === "asc" ? result : -result;
+  //   } else if (typeof aVal === "number" && typeof bVal === "number") {
+  //     const result = aVal - bVal;
+  //     return sortDir === "asc" ? result : -result;
+  //   }
+  //   return 0;
+  // };
 
-    if (typeof aVal === "string" && typeof bVal === "string") {
-      const result = aVal.localeCompare(bVal);
-      return sortDir === "asc" ? result : -result;
-    } else if (typeof aVal === "number" && typeof bVal === "number") {
-      const result = aVal - bVal;
-      return sortDir === "asc" ? result : -result;
-    }
-    return 0;
-  };
-
-  const sorted = useMemo(
-    () => usersList.toSorted(comparator),
-    [sortField, sortDir, usersList],
-  );
-  // const sorted = sorted.slice(startIndex, startIndex + pageSize);
-
-  const handleToggleSort = (field: keyof Person) => {
-    setSortField(field);
-    if (field !== sortField) {
-      return setSortDir("asc");
-    }
-    return setSortDir((prev) => (prev === "asc" ? "dsc" : "asc"));
-  };
+  // const sorted = useMemo(
+  //   () => usersList.toSorted(comparator),
+  //   [sortField, sortDir, usersList],
+  // );
 
   return (
     <div className={styles.tableWrapper}>
@@ -110,8 +103,8 @@ const Table = ({
           </tr>
         </thead>
         <tbody>
-          {sorted.length > 0 ? (
-            sorted.map((user) => (
+          {usersList.length > 0 ? (
+            usersList.map((user) => (
               <tr
                 className={styles.clickableRow}
                 key={user.id}

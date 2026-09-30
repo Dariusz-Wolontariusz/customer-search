@@ -1,13 +1,14 @@
 import { neon } from "@neondatabase/serverless";
 const sql = neon(process.env.DATABASE_URL!);
 const perPage = [25, 50, 75, 100];
+import { SortColumns } from "@/types/types";
 
 //translate TS to SQL
 
-const sortColumns: Record<string, string> = {
+const sortColumns: Record<SortColumns, string> = {
   id: "id",
-  firstName: "first_name",
   lastName: "last_name",
+  email: "email",
   company: "company",
   country: "country",
   status: "status",
@@ -22,7 +23,7 @@ export async function GET(request: Request) {
   const search = params.get("search") ?? "";
   const searchPattern = "%" + search + "%";
   const rawSortField = params.get("sortField") ?? "";
-  const sortField = sortColumns[rawSortField] ?? "id";
+  const sortField = sortColumns[rawSortField as SortColumns] ?? "id";
   const rawSortDir = params.get("sortDir");
 
   const sortDir = rawSortDir === "dsc" ? "DESC" : "ASC";

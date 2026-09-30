@@ -1,12 +1,12 @@
 "use client";
-import { Person } from "@/types/types";
+import { Person, SortColumns } from "@/types/types";
 import { ArrowDownAZ, ArrowUpZA } from "lucide-react";
 import styles from "./sort-button.module.css";
 
 type SortButtonProps = {
-  field: keyof Person;
+  field: SortColumns;
   sortDir: "asc" | "dsc";
-  handleToggleSort: (field: keyof Person) => void;
+  handleToggleSort: (field: SortColumns) => void;
 };
 
 const SortButton = ({ field, sortDir, handleToggleSort }: SortButtonProps) => {

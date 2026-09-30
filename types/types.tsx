@@ -37,3 +37,11 @@ export type ApiResponse = {
   customers: Person[];
   total: number;
 };
+
+export type SortColumns =
+  | "id"
+  | "lastName"
+  | "email"
+  | "company"
+  | "country"
+  | "status";

@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./styles.module.css";
-import { Person, ApiResponse } from "@/types/types";
+import { Person, ApiResponse, SortColumns } from "@/types/types";
 import { useEffect, useState, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { CircleAlert } from "lucide-react";
@@ -13,11 +13,15 @@ async function getUsers(
   page: number,
   pageSize: number,
   search: string,
+  sortField: SortColumns,
+  sortDir: "asc" | "dsc",
 ): Promise<ApiResponse> {
   const params = new URLSearchParams();
   params.set("page", String(page));
   params.set("pageSize", String(pageSize));
   params.set("search", search);
+  params.set("sortField", sortField);
+  params.set("sortDir", sortDir);
 
   const apiUrl = `/api/customers?${params.toString()}`;
 
@@ -37,6 +41,8 @@ const UserSearchContent = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  const [sortDir, setSortDir] = useState<"asc" | "dsc">("asc");
+  const [sortField, setSortField] = useState<SortColumns>("lastName");
   const columnNumber = 3;
   const isFirstRun = useRef<boolean>(true);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
@@ -56,15 +62,32 @@ const UserSearchContent = () => {
     router.replace(`?${params.toString()}`);
   };
 
+  const handleToggleSort = (field: SortColumns) => {
+    goToPage(1);
+    setSortField(field);
+    if (field !== sortField) {
+      return setSortDir("asc");
+    }
+    return setSortDir((prev) => (prev === "asc" ? "dsc" : "asc"));
+  };
+
   useEffect(() => {
+    let ignore = false;
+
     const load = async () => {
       try {
         setIsLoading(true);
         setError(null);
 
-        const data = await getUsers(page, pageSize, search);
-        setUsersList(data.customers);
-        setTotalMatches(data.total);
+        const data = await getUsers(page, pageSize, search, sortField, sortDir);
+
+        if (!ignore) {
+          setUsersList(data.customers);
+          setTotalMatches(data.total);
+        }
+        return () => {
+          ignore = true;
+        };
       } catch (error) {
         setError(
           "Could not load the customers list. Please refresh the screen to try again.",
@@ -76,7 +99,7 @@ const UserSearchContent = () => {
     };
 
     load();
-  }, [page, search, pageSize]);
+  }, [page, search, pageSize, sortField, sortDir]);
 
   useEffect(() => {
     const updateUrl = (searchWordInput: string) => {
@@ -196,6 +219,8 @@ const UserSearchContent = () => {
             columnNumber={columnNumber}
             handleAvatarClick={handleAvatarClick}
             handleRowClick={handleRowClick}
+            handleToggleSort={handleToggleSort}
+            sortDir={sortDir}
           />
         )}
 
