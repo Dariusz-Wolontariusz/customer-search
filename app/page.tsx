@@ -82,7 +82,16 @@ function StartPage() {
       </main>
       <footer className={styles.footer}>
         <div className={styles.footerInner}>
+          {/* <div className={styles.footerNameLogo}> */}
           <p>Built by Dariusz Ciazynski</p>
+          {/* <img
+              src="/DC_logo.png"
+              alt="Dariusz Ciazynski"
+              width={32}
+              height={32}
+            /> */}
+          {/* </div> */}
+
           <ul role="list" className={styles.footerList}>
             <li>
               <a

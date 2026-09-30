@@ -192,6 +192,11 @@
   margin-inline: auto;
 }
 
+/* .footerNameLogo {
+  display: flex;
+  flex-direction: row;
+} */
+
 .footerList {
   list-style: none;
   display: flex;
