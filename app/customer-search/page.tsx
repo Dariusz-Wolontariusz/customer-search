@@ -85,9 +85,7 @@ const UserSearchContent = () => {
           setUsersList(data.customers);
           setTotalMatches(data.total);
         }
-        return () => {
-          ignore = true;
-        };
+        
       } catch (error) {
         setError(
           "Could not load the customers list. Please refresh the screen to try again.",
@@ -99,6 +97,9 @@ const UserSearchContent = () => {
     };
 
     load();
+    return () => {
+          ignore = true;
+        };
   }, [page, search, pageSize, sortField, sortDir]);
 
   useEffect(() => {
